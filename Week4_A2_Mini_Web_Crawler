@@ -1,0 +1,44 @@
+from bs4 import BeautifulSoup
+import urllib.request
+import ssl
+import re
+
+
+def u():
+    # Ignore SSL Certificate Errors
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
+    url = 'http://py4e-data.dr-chuck.net/known_by_Fikret.html' # Sample data
+    url2 = input("Enter URL ")
+    pos = int(input("Enter position "))
+    count = int(input("Enter total counts "))
+    html = urllib.request.urlopen(url2).read()
+    soup = BeautifulSoup(html, 'html.parser')
+    tags = soup('a')
+
+    for i in range(0, count):
+        i = 0
+        for t in tags:
+            i += 1
+            if i == pos:
+                link = t.get('href', None)
+                break
+
+        html = urllib.request.urlopen(link).read()
+        soup = BeautifulSoup(html, 'html.parser')
+        tags = soup('a')
+        link = t.get('href', None)
+    data = re.findall('known_by_(.+).html', link)
+    print(data[0])
+
+
+def main():
+    u()
+
+
+if __name__ == "__main__":
+    main()
+
+
