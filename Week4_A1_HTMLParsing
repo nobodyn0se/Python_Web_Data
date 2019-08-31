@@ -1,0 +1,31 @@
+from bs4 import BeautifulSoup
+import urllib.request
+import ssl
+import re
+
+
+def u():
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
+    url = 'http://py4e-data.dr-chuck.net/comments_42.html'     # Test data
+    url2 = 'http://py4e-data.dr-chuck.net/comments_290566.html'     # Actual data
+    html = urllib.request.urlopen(url2).read()
+    soup = BeautifulSoup(html, 'html.parser')
+    tags = str(soup('span'))
+    l = re.findall('[0-9]+', tags)
+    s = 0
+    for _ in l:
+        s += int(_)
+    print(s)
+
+
+def main():
+    u()
+
+
+if __name__ == "__main__":
+    main()
+
+
