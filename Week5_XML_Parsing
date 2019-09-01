@@ -1,0 +1,30 @@
+import xml.etree.ElementTree as ET
+import urllib.request
+import ssl
+
+
+def u():
+    # Ignore SSL Certificates Error
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
+    inp = 'http://py4e-data.dr-chuck.net/comments_42.xml'   # Sample Data
+    inp2 = 'http://py4e-data.dr-chuck.net/comments_290568.xml'    # Actual Data
+    data = urllib.request.urlopen(inp2, context=ctx).read()
+    commentinfo = ET.fromstring(data)
+    lst = commentinfo.findall('comments/comment')
+    sum1 = 0
+    for l in lst:
+        sum1 += int(l.find('count').text)
+    print(sum1)
+
+
+def main():
+    u()
+
+
+if __name__ == "__main__":
+    main()
+
+
