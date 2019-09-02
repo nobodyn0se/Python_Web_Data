@@ -1,0 +1,22 @@
+
+def j():
+    # Ignores SSL Certificate Errors
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+    
+    url = 'http://py4e-data.dr-chuck.net/comments_42.json'  # Sample data
+    par = urllib.request.urlopen(url, context=ctx).read()
+    data = json.loads(par)
+    s1 = 0
+    for i in data['comments']:
+        s1 += int(i['count'])
+    print(s1)
+
+
+def main():
+    j()
+
+
+if __name__ == "__main__":
+    main()
