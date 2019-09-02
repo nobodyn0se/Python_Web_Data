@@ -10,7 +10,6 @@ def u():
     ctx.verify_mode = ssl.CERT_NONE
 
     inp = 'http://py4e-data.dr-chuck.net/comments_42.xml'   # Sample Data
-    inp2 = 'http://py4e-data.dr-chuck.net/comments_290568.xml'    # Actual Data
     data = urllib.request.urlopen(inp2, context=ctx).read()
     commentinfo = ET.fromstring(data)
     lst = commentinfo.findall('comments/comment')
